@@ -1,0 +1,88 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:unified="sap.ui.unified">
+
+    <Dialog id="addExpenseDialog" title="Add/Update Expense" stretchOnPhone="true">
+
+        <l:Grid defaultSpan="L6 M6 S12" hSpacing="2" vSpacing="2">
+
+            <!-- LEFT PANEL: Preview -->
+            <l:content>
+                <VBox class="sapUiSmallMargin" alignItems="Center" justifyContent="Center" width="100%" height="100%">
+                    <Text id="txtNoPreview" text="No receipt uploaded yet"/>
+                    <Image id="imgReceiptPreview" visible="false" width="100%" densityAware="false"/>
+                    <core:HTML id="pdfPreview" visible="false"/>
+                </VBox>
+            </l:content>
+
+            <!-- RIGHT PANEL: Form -->
+            <l:content>
+                <VBox class="sapUiSmallMargin" width="100%">
+
+                    <!-- Mandatory Category -->
+                    <Label text="Category" required="true"/>
+                    <Select id="selCategory" forceSelection="true" width="100%">
+                        <core:Item key="" text="Select a category"/>
+                        <core:Item key="food" text="Food" icon="sap-icon://meal"/>
+                        <core:Item key="fuel" text="Fuel" icon="sap-icon://accelerated"/>
+                        <core:Item key="hotel" text="Hotel" icon="sap-icon://bed"/>
+                        <core:Item key="flight" text="Flight" icon="sap-icon://flight"/>
+                        <core:Item key="travel" text="Local Travel" icon="sap-icon://taxi"/>
+                        <core:Item key="misc" text="Misc Expenses" icon="sap-icon://expense-report"/>
+                    </Select>
+
+                    <!-- Mandatory Project -->
+                    <Label text="Project" required="true"/>
+                    <Input id="inpProject" placeholder="Project"/>
+
+                    <!-- Mandatory Title -->
+                    <Label text="Expense Title" required="true"/>
+                    <Input id="inpTitle" placeholder="Expense Title"/>
+
+                    <!-- Mandatory Date -->
+                    <Label text="Expense Date" required="true"/>
+                    <DatePicker id="dpExpenseDate" placeholder="Expense Date"/>
+
+                    <!-- Mandatory Currency (default INR) -->
+                    <Label text="Currency" required="true"/>
+                    <Select id="selCurrency" width="100%" selectedKey="INR">
+                        <core:Item key="USD" text="USD"/>
+                        <core:Item key="EUR" text="EUR"/>
+                        <core:Item key="INR" text="INR"/>
+                        <core:Item key="GBP" text="GBP"/>
+                        <core:Item key="JPY" text="JPY"/>
+                    </Select>
+
+                    <!-- Mandatory Amount -->
+                    <Label text="Amount" required="true"/>
+                    <Input id="inpAmount" placeholder="Amount" type="Number"/>
+
+                    <!-- Optional Comment -->
+                    <Label text="Comment" required="true"/>
+                    <Input id="inpComment" placeholder="Comment"/>
+
+                    <!-- File Uploader -->
+                    <Label text="Receipt Upload" required="true"/>
+                    <unified:FileUploader
+                        id="fileUploader"
+                        name="myFileUpload"
+                        placeholder="Upload receipt"
+                        fileType="pdf,jpg,png"
+                        maximumFileSize="3"
+                        change=".onFileUploadChange"
+                        uploadOnChange="false"/>
+                </VBox>
+            </l:content>
+
+        </l:Grid>
+
+        <!-- Footer with multiple buttons -->
+        <buttons>
+            <Button id="btnSaveExpense" text="Save Expense" type="Emphasized" press=".onSaveExpense"/>
+            <Button id="btnSubmitClaim" text="Submit Claim" enabled="false" press=".onSubmitClaim"/>
+            <Button id="btnCloseExpense" text="Close" press=".onCloseExpense"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

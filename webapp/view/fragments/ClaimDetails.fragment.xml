@@ -1,0 +1,67 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog id="claimDetailsDialog" title="Claim Details" stretchOnPhone="true" draggable="true" resizable="true">
+        <l:Grid defaultSpan="L6 M6 S12" hSpacing="2" vSpacing="2">
+
+            <!-- LEFT PANEL: Attachment Preview -->
+            <l:content>
+                <VBox class="sapUiSmallMargin" alignItems="Center" justifyContent="Center" width="100%" height="100%">
+                    <Text id="txtNoPreview" text="No attachment available"/>
+                    <Image id="imgReceiptPreview" visible="false" width="100%" densityAware="false"/>
+                    <core:HTML id="pdfPreview" visible="false" sanitizeContent="false"/>
+                </VBox>
+            </l:content>
+
+            <!-- RIGHT PANEL: Claim Info (read-only) -->
+            <l:content>
+                <VBox class="sapUiSmallMargin" width="100%">
+
+                    <Label text="Claim Number"/>
+                    <Text id="txtClaimNumber"/>
+
+                    <Label text="Category"/>
+                    <Text id="txtCategory"/>
+
+                    <Label text="Project"/>
+                    <Text id="txtProject"/>
+
+                    <Label text="Title"/>
+                    <Text id="txtTitle"/>
+
+                    <Label text="Date"/>
+                    <Text id="txtDate"/>
+
+                    <Label text="Currency"/>
+                    <Text id="txtCurrency"/>
+
+                    <Label text="Amount"/>
+                    <Text id="txtAmount"/>
+
+                    <Label text="Comment"/>
+                    <Text id="txtComment"/>
+
+                    <Label text="Approved Amount"/>
+                    <Text id="txtApprovedAmount"/>
+
+                    <Label text="Status"/>
+                    <Text id="txtStatus"/>
+
+                    <Label text="Action Taken"/>
+                    <Text id="txtActionTaken"/>
+
+                    <Label text="Waiting On"/>
+                    <Text id="txtWaitingOn"/>
+                </VBox>
+            </l:content>
+
+        </l:Grid>
+
+        <!-- Footer -->
+        <buttons>
+            <Button text="Close" press=".onCloseClaimDetails"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

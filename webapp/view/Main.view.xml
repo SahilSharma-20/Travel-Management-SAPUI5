@@ -1,0 +1,260 @@
+<mvc:View
+    controllerName="tvl.mgm.travelmanagement.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <m:NavContainer id="navContainer">
+
+        <!-- Main Page -->
+        <m:Page id="mainPage" title="{i18n>title}" class="tvlPage">
+
+            <!-- Tab Header -->
+            <m:VBox class="tabHeaderContainer">
+                <m:HBox id="tabHeader" class="tabHeader" justifyContent="Start" alignItems="Center" width="100%">
+                    <m:Button id="btnPending" text="Pending Expenses" type="Transparent" press=".onTabSelect">
+                        <m:customData>
+                            <core:CustomData key="section" value="pending"/>
+                        </m:customData>
+                    </m:Button>
+                    <m:Button id="btnPast" text="Past Claims" type="Transparent" press=".onTabSelect">
+                        <m:customData>
+                            <core:CustomData key="section" value="past"/>
+                        </m:customData>
+                    </m:Button>
+                    <m:Button id="btnAdvance" text="Advance Requests" type="Transparent" press=".onTabSelect">
+                        <m:customData>
+                            <core:CustomData key="section" value="advance"/>
+                        </m:customData>
+                    </m:Button>
+                </m:HBox>
+            </m:VBox>
+
+            <!-- Content area -->
+            <m:VBox id="contentArea" fitContainer="true" renderType="Bare" width="100%" class="contentArea">
+
+                <!-- Pending Expenses Section -->
+                <m:VBox id="pendingSection" visible="true" class="sectionVBox">
+                    <m:Toolbar>
+                        <m:Title text="Expenses to be Claimed" level="H3"/>
+                        <m:ToolbarSpacer/>
+                        <m:Button id="btnAddExpense" text="Add Expense" type="Emphasized" press=".onAddExpense"/>
+                    </m:Toolbar>
+
+                    <m:VBox class="sectionContent">
+                        <m:Text id="txtNoSaved" text="No saved expenses to show." visible="{= ${/savedExpenses}.length === 0 }"/>
+                        <m:List id="savedExpensesList" items="{/savedExpenses}" visible="{= ${/savedExpenses}.length > 0 }">
+                            <m:StandardListItem title="{title}" description="{amount}"/>
+                        </m:List>
+                    </m:VBox>
+
+                    <m:Toolbar>
+                        <m:Title text="Expense claims in process" level="H3"/>
+                    </m:Toolbar>
+
+                    <m:VBox class="sectionContent">
+                        <m:Table
+    id="claimsTable"
+    items="{claims>/claimsInProcess}"
+>
+    <m:columns>
+        <m:Column>
+            <m:Text text="Claim Number" />
+        </m:Column>
+        <m:Column>
+            <m:Text text="Approved Amount" />
+        </m:Column>
+        <m:Column>
+            <m:Text text="Claim Status" />
+        </m:Column>
+        <m:Column>
+            <m:Text text="Action Taken" />
+        </m:Column>
+        <m:Column>
+            <m:Text text="Waiting On" />
+        </m:Column>
+    </m:columns>
+
+    <m:items>
+        <m:ColumnListItem>
+            <m:cells>
+                <m:Text text="{claims>claimNumber}" />
+                <m:Text text="{claims>approvedAmount}" />
+                <m:Text text="{claims>status}" />
+                <m:Text text="{claims>actionTaken}" />
+                <m:Text text="{claims>waitingOn}" />
+            </m:cells>
+        </m:ColumnListItem>
+    </m:items>
+</m:Table>
+
+
+                    </m:VBox>
+
+                    <m:Toolbar>
+                        <m:Title text="Advance settlements in process" level="H3"/>
+                    </m:Toolbar>
+                    <m:VBox class="sectionContent">
+                        <m:Text id="txtNoAdvancePending" text="No pending expenses claims to show."/>
+                    </m:VBox>
+                </m:VBox>
+
+                <!-- Past Claims Section -->
+                <m:VBox id="pastSection" visible="false" class="sectionVBox">
+                    <m:Toolbar>
+                        <m:Title text="Past Expense Claims" level="H3"/>
+                    </m:Toolbar>
+                    <m:HBox class="dateRangeRow" alignItems="Center" justifyContent="Start" width="100%">
+                        <m:Label text="Paid Date"/>
+                        <m:DatePicker id="dpFromPast" value="2025-08-17"/>
+                        <m:Label text=" - "/>
+                        <m:DatePicker id="dpToPast" value="2025-09-16"/>
+                        <m:Button id="btnSearchPast" text="Search" press=".onSearchPastClaims"/>
+                    </m:HBox>
+                    <m:VBox class="sectionContent">
+                        <m:Text id="txtNoPastClaims" text="No past claims to show within the date range selected."/>
+                    </m:VBox>
+
+                    <m:Toolbar>
+                        <m:Title text="Past Advance Settlements" level="H3"/>
+                    </m:Toolbar>
+                    <m:HBox class="dateRangeRow" alignItems="Center" justifyContent="Start" width="100%">
+                        <m:Label text="Paid Date"/>
+                        <m:DatePicker id="dpFromPastAdv" value="2025-08-17"/>
+                        <m:Label text=" - "/>
+                        <m:DatePicker id="dpToPastAdv" value="2025-09-16"/>
+                        <m:Button id="btnSearchPastAdv" text="Search" press=".onSearchPastAdvances"/>
+                    </m:HBox>
+                    <m:VBox class="sectionContent">
+                        <m:Text id="txtNoPastAdv" text="No past claims to show within the date range selected."/>
+                    </m:VBox>
+                </m:VBox>
+
+                <!-- Advance Requests Section -->
+                <m:VBox id="advanceSection" visible="false" class="sectionVBox">
+                    <m:Toolbar>
+                        <m:Title text="Travel &amp; Advance Requests" level="H3"/>
+                        <m:ToolbarSpacer/>
+                        <m:Button id="btnRequestAdvance" text="Request Advance" type="Emphasized" press=".onRequestAdvance"/>
+                    </m:Toolbar>
+                    <m:VBox class="sectionContent">
+                        <m:Text text="Travel and expense requests are made prior to incurring the expenses."/>
+                    </m:VBox>
+
+                    <m:Toolbar>
+                        <m:Title text="Advance Requests in Process" level="H3"/>
+                    </m:Toolbar>
+                    <m:VBox class="sectionContent">
+                        <m:Text id="txtNoAdvReqInProcess" text="No advance requests to show."/>
+                    </m:VBox>
+
+                    <m:Toolbar>
+                        <m:Title text="Advance Requests History" level="H3"/>
+                    </m:Toolbar>
+                    <m:VBox class="sectionContent">
+                        <m:Text id="txtNoAdvReqHistory" text="No past advance requests to show."/>
+                    </m:VBox>
+                </m:VBox>
+
+            </m:VBox>
+
+            <!-- Footer with Inbox buttons -->
+            <m:footer>
+                <m:Toolbar>
+                    <m:ToolbarSpacer/>
+                    <m:Button id="btnManagerInbox" text="Manager Approval Inbox" type="Emphasized" press=".onOpenManagerInbox"/>
+                    <m:Button id="btnHRInbox" text="HR Approval Inbox" type="Emphasized" press=".onOpenHRInbox"/>
+                </m:Toolbar>
+            </m:footer>
+
+        </m:Page>
+
+        <!-- Manager Inbox Page -->
+<m:Page id="managerPage" title="Manager Approval Inbox">
+<m:Toolbar>
+    <m:ToolbarSpacer />
+    <m:Button
+        text="Back"
+        press=".onBackToMain"
+    />
+</m:Toolbar>
+
+    <m:VBox>
+
+        <m:Title text="Pending Approval" level="H3" class="pageTitle"/>
+        <m:Table id="managerInboxTable" items="{claims>/claimsInProcess}">
+            <m:columns>
+                <m:Column><m:Text text="Claim Number"/></m:Column>
+                <m:Column><m:Text text="Amount"/></m:Column>
+                <m:Column><m:Text text="Category"/></m:Column>
+                <m:Column><m:Text text="Submitted Date"/></m:Column>
+                <m:Column><m:Text text="Action"/></m:Column>
+                <m:Column><m:Text text="More"/></m:Column>
+            </m:columns>
+            <m:items>
+            <m:ColumnListItem>
+    <m:cells>
+        <m:Text text="{claims>claimNumber}" />
+        <m:Text text="{claims>amount}" />
+        <m:Text text="{claims>category}" />
+        <m:Text text="{claims>date}" />
+        <m:HBox>
+            <m:Button
+                text="Approve"
+                type="Accept"
+                press=".onApprove"
+            />
+            <m:Button
+                text="Reject"
+                type="Reject"
+                press=".onReject"
+            />
+        </m:HBox>
+        <m:Button
+            icon="sap-icon://show"
+            press=".onViewClaimDetails"
+        />
+    </m:cells>
+</m:ColumnListItem>
+
+            </m:items>
+        </m:Table>
+        <!-- <m:Button text="Back" press=".onBackToMain"/> -->
+    </m:VBox>
+</m:Page>
+
+<!-- HR Inbox Page -->
+<m:Page id="hrPage" title="HR Approval Inbox">
+    <m:VBox>
+        <m:Title text="Pending Approval" level="H3" class="pageTitle"/>
+        <m:Table id="hrInboxTable" items="{claims>/claimsInProcess}">
+            <m:columns>
+                <m:Column><m:Text text="Claim Number"/></m:Column>
+                <m:Column><m:Text text="Amount"/></m:Column>
+                <m:Column><m:Text text="Category"/></m:Column>
+                <m:Column><m:Text text="Submitted Date"/></m:Column>
+                <m:Column><m:Text text="Action"/></m:Column>
+                <m:Column><m:Text text="More"/></m:Column>
+            </m:columns>
+            <m:items>
+                <m:ColumnListItem>
+                    <m:cells>
+                        <m:Text text="{claims>claimNumber}"/>
+                        <m:Text text="{claims>amount}"/>
+                        <m:Text text="{claims>category}"/>
+                        <m:Text text="{claims>date}"/>
+                        <m:HBox>
+                         <m:Button text="Approve" type="Accept" press=".onApproveHR"/>
+                         <m:Button text="Reject" type="Reject" press=".onRejectHR"/>
+                        </m:HBox>
+                        <m:Button icon="sap-icon://inspect" press=".onOpenClaimDetails" type="Transparent"/>
+                    </m:cells>
+                </m:ColumnListItem>
+            </m:items>
+        </m:Table>
+        <m:Button text="Back" press=".onBackToMain"/>
+    </m:VBox>
+</m:Page>
+
+    </m:NavContainer>
+</mvc:View>

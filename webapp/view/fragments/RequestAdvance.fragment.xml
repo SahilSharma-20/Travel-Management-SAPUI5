@@ -1,0 +1,66 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:unified="sap.ui.unified">
+
+    <Dialog id="requestAdvanceDialog" title="Travel / Advance Request" stretchOnPhone="true">
+
+        <VBox class="sapUiSmallMargin" width="100%">
+
+            <!-- Expense Category -->
+            <Label text="Expense Category" required="true"/>
+            <Select id="advSelCategory" forceSelection="true" width="100%">
+                <core:Item key="" text="Select a category"/>
+                <core:Item key="hotel" text="Hotel"/>
+                <core:Item key="fuel" text="Fuel"/>
+                <core:Item key="food" text="Food"/>
+                <core:Item key="flight" text="Flight"/>
+            </Select>
+
+            <!-- Project / Cost Center -->
+            <Label text="Project / Cost Center" required="true"/>
+            <Input id="advInpProject" placeholder="Enter Project or Cost Center"/>
+
+            <!-- Currency -->
+            <Label text="Currency" required="true"/>
+            <Select id="advSelCurrency" width="100%" selectedKey="INR">
+                <core:Item key="USD" text="USD"/>
+                <core:Item key="EUR" text="EUR"/>
+                <core:Item key="INR" text="INR"/>
+                <core:Item key="GBP" text="GBP"/>
+                <core:Item key="JPY" text="JPY"/>
+            </Select>
+
+            <!-- Amount -->
+            <Label text="Amount" required="true"/>
+            <Input id="advInpAmount" type="Number" placeholder="Enter Amount"/>
+
+            <!-- Purpose of Advance / Travel -->
+            <Label text="Purpose of Advance / Travel" required="true"/>
+            <Input id="advInpPurpose" placeholder="Enter purpose"/>
+
+            <!-- Note or comment for approvers -->
+            <Label text="Note / Comment for Approvers"/>
+            <Input id="advInpComment" placeholder="Optional note"/>
+
+            <!-- File Uploader -->
+            <Label text="Add Attachment"/>
+            <unified:FileUploader
+                id="advFileUploader"
+                name="advanceFileUpload"
+                placeholder="Upload attachment"
+                fileType="pdf,jpg,png,doc,docx"
+                maximumFileSize="5"
+                uploadOnChange="false"/>
+        </VBox>
+
+        <!-- Footer Buttons -->
+        <beginButton>
+            <Button id="btnSubmitAdvance" text="Submit Request" type="Emphasized" press=".onSubmitAdvance"/>
+        </beginButton>
+        <endButton>
+            <Button id="btnCloseAdvance" text="Close" press=".onCloseAdvance"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

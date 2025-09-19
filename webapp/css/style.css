@@ -1,0 +1,47 @@
+/* Enter your custom styles here */
+/* Page padding and spacing */
+.tvlPage .sapMPageContent {
+    padding: 0.75rem;
+}
+
+/* Tab header styling */
+.tabHeader {
+    padding: 0.5rem 0.5rem;
+    gap: 1rem;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+/* Default tab button appearance (transparent) */
+.tabHeader .sapMBtn {
+    border-radius: 0;
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+}
+
+/* Active tab: blue underline */
+.tabItemActive {
+    position: relative;
+}
+
+/* create underline using pseudo-element via style of Button inner span can't via CSS easily,
+   so we add a bottom border to the button's root element */
+.tabItemActive.sapMBtn {
+    border-bottom: 3px solid #0a6ed1; /* SAP Fiori blue */
+    color: #0a6ed1;
+}
+
+/* Content sections spacing */
+.sectionVBox {
+    margin-top: 1rem;
+}
+
+.sectionContent {
+    padding: 0.75rem 0;
+}
+
+/* Date range row spacing */
+.dateRangeRow > .sapMLabel,
+.dateRangeRow > .sapMDatePicker,
+.dateRangeRow > .sapMButton {
+    margin-right: 0.5rem;
+}
